@@ -8,9 +8,8 @@ def create_connection(config : RabbitConfig = None):
         config = RabbitConfig()
 
 
-    connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host=config.host)
-    )
+    parameters = pika.URLParameters(config.url)
+    connection = pika.BlockingConnection(parameters)
 
     channel = connection.channel()
     channel.exchange_declare(

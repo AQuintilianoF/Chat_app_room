@@ -1,10 +1,16 @@
 from dataclasses import dataclass
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 @dataclass
 class RabbitConfig:
-    host: str = "localhost"
-    exchange: str = "chat.topic"
-    exchange_type: str = "topic"
+
+    url: str = None
+    def __post_init__(self):
+        if self.url is None:
+            self.url = os.getenv("AMQP_URL", "amqp://localhost")
 
 
 def room_key(room: str) -> str:
