@@ -21,6 +21,6 @@ class RabbitConfig:
             else:
                 self.url = "amqp://localhost"
 
-
 def room_key(room: str) -> str:
+    return f"room.{room}"
     return f"room.{room}"

@@ -1,12 +1,10 @@
-import pika 
+import pika
 from chat_app.config import RabbitConfig
 
-
-def create_connection(config : RabbitConfig = None):
+def create_connection(config: RabbitConfig = None):
 
     if config is None:
         config = RabbitConfig()
-
 
     parameters = pika.URLParameters(config.url)
     connection = pika.BlockingConnection(parameters)
@@ -18,4 +16,4 @@ def create_connection(config : RabbitConfig = None):
         durable       = True
     )
 
-    return connection,channel
+    return connection, channel

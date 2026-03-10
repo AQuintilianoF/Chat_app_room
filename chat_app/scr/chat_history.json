@@ -1,64 +1,111 @@
 {
   "DEV": [
     {
-      "timestamp": "2026-03-05 20:45:36",
+      "timestamp": "2026-03-10 16:03:14",
       "username": "Andre",
-      "text": "A sala do inicia quando houver pelo menos uma msg"
+      "text": "Andre created a this ROOM"
     },
     {
-      "timestamp": "2026-03-05 20:45:37",
+      "timestamp": "2026-03-10 16:03:14",
       "username": "Andre",
-      "text": "A sala do inicia quando houver pelo menos uma msg"
+      "text": "Andre created a this ROOM"
     },
     {
-      "timestamp": "2026-03-05 20:46:01",
-      "username": "Bianca",
-      "text": "Oi Andre , voce ja esta aqui ?"
-    },
-    {
-      "timestamp": "2026-03-05 20:46:01",
-      "username": "Bianca",
-      "text": "Oi Andre , voce ja esta aqui ?"
-    },
-    {
-      "timestamp": "2026-03-05 20:46:14",
+      "timestamp": "2026-03-10 16:05:27",
       "username": "Andre",
-      "text": "simm, como esta seu dia"
+      "text": "Obrigado Andre"
     },
     {
-      "timestamp": "2026-03-05 20:46:31",
+      "timestamp": "2026-03-10 16:05:27",
+      "username": "Andre",
+      "text": "Obrigado Andre"
+    },
+    {
+      "timestamp": "2026-03-10 16:05:35",
       "username": "Andre",
       "text": ""
     },
     {
-      "timestamp": "2026-03-05 20:46:35",
+      "timestamp": "2026-03-10 16:05:35",
       "username": "Andre",
-      "text": "."
+      "text": ""
     },
     {
-      "timestamp": "2026-03-05 20:46:44",
+      "timestamp": "2026-03-10 16:08:54",
       "username": "Andre",
-      "text": ".   .   ."
+      "text": "agora esta funcionando do mesmo modo ?"
     },
     {
-      "timestamp": "2026-03-05 22:54:30",
-      "username": "Bruno",
-      "text": "Alguem ai ?"
-    },
-    {
-      "timestamp": "2026-03-05 22:54:30",
-      "username": "Bruno",
-      "text": "Alguem ai ?"
-    },
-    {
-      "timestamp": "2026-03-05 22:54:47",
+      "timestamp": "2026-03-10 16:09:02",
       "username": "Andre",
-      "text": "sim , estou aqui"
+      "text": "veremos"
     },
     {
-      "timestamp": "2026-03-05 22:54:47",
+      "timestamp": "2026-03-10 16:52:54",
       "username": "Andre",
-      "text": "sim , estou aqui"
+      "text": "oi"
+    },
+    {
+      "timestamp": "2026-03-10 16:52:57",
+      "username": "Andre",
+      "text": "porra"
+    },
+    {
+      "timestamp": "2026-03-10 16:55:51",
+      "username": "Andre",
+      "text": "mmc"
+    },
+    {
+      "timestamp": "2026-03-10 16:55:54",
+      "username": "Andre",
+      "text": "meu deus"
+    },
+    {
+      "timestamp": "2026-03-10 16:56:58",
+      "username": "Andre",
+      "text": "fasdf"
+    },
+    {
+      "timestamp": "2026-03-10 17:03:35",
+      "username": "Andre",
+      "text": "xjhvjcd"
+    },
+    {
+      "timestamp": "2026-03-10 17:20:45",
+      "username": "Andre",
+      "text": "dc"
+    }
+  ],
+  "MEETING": [
+    {
+      "timestamp": "2026-03-10 16:04:05",
+      "username": "Andre",
+      "text": "Andre Created a this ROOM"
+    },
+    {
+      "timestamp": "2026-03-10 16:04:05",
+      "username": "Andre",
+      "text": "Andre Created a this ROOM"
+    },
+    {
+      "timestamp": "2026-03-10 16:20:46",
+      "username": "Andre",
+      "text": "agora eu tenho essa tool"
+    },
+    {
+      "timestamp": "2026-03-10 16:54:36",
+      "username": "Andre",
+      "text": "xc"
+    },
+    {
+      "timestamp": "2026-03-10 16:55:34",
+      "username": "Andre",
+      "text": "jska"
+    },
+    {
+      "timestamp": "2026-03-10 17:03:22",
+      "username": "Andre",
+      "text": "aojd"
     }
   ]
 }

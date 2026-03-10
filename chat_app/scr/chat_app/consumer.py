@@ -5,12 +5,11 @@ from chat_app.config     import RabbitConfig
 EXCHANGE = "chat.topic"
 
 def start_consumer(room: str, on_message=None, config: RabbitConfig = None):
- 
-    connection, channel = create_connection(config) 
 
-    result      = channel.queue_declare(queue="", exclusive=True)
-    queue_name  = result.method.queue
+    connection, channel = create_connection(config)
 
+    result     = channel.queue_declare(queue="", exclusive=True)
+    queue_name = result.method.queue
 
     channel.queue_bind(
         exchange    = EXCHANGE,
@@ -18,13 +17,10 @@ def start_consumer(room: str, on_message=None, config: RabbitConfig = None):
         routing_key = f"room.{room}"
     )
 
-    
-    def default_callback(ch, method, properties, body):
-        text = body.decode("utf-8", errors="replace")
-        print(f"\n{text}\n> ", end="", flush=True)
+    if on_message is None:
+        raise ValueError("on_message callback is required")
 
-    callback = on_message if on_message is not None else default_callback
-
+    callback = on_message
 
     def run():
 
@@ -34,10 +30,10 @@ def start_consumer(room: str, on_message=None, config: RabbitConfig = None):
             auto_ack            = True
         )
 
-        print(f"[sistema] Conectado à sala '{room}'. Aguardando mensagens...")
+        print(f"[system] Connected to room '{room}'. Waiting for messages...")
         channel.start_consuming()
 
     t = threading.Thread(target=run, daemon=True)
     t.start()
 
-    return connection, t
+    return connection,channel, t

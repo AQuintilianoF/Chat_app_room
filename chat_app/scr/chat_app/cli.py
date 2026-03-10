@@ -2,137 +2,175 @@ import argparse
 import time
 from chat_app.service import ChatService
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--port", type=int, default=None, help="Porta TCP do RabbitMQ")
+parser = argparse.ArgumentParser(description="Chat App")
+parser.add_argument("--port", type=int, default=None, help="RabbitMQ TCP port")
 args = parser.parse_args()
 
-def exibir_historico(historico: list[dict]) -> None:
+def display_history(history: list[dict]) -> None:
 
-    if not historico:
-        print("\n[sistema] Nenhuma mensagem anterior nesta sala.\n")
+    if not history:
+        print("\n[system] No previous messages in this room.\n")
         return
 
-    print("\n[sistema] --- histórico da sala ---")
+    print("\n[system] --- room history ---")
 
-    for entrada in historico:
-        print(f"[{entrada['timestamp']}] {entrada['username']}: {entrada['text']}")
+    for entry in history:
+        print(f"[{entry['timestamp']}] {entry['username']}: {entry['text']}")
 
-    print("[sistema] --- fim do histórico ---\n")
+    print("[system] --- end of history ---\n")
 
+def select_room(service: ChatService) -> str:
 
-def selecionar_sala(service: ChatService) -> str:
-
-    salas = service.get_available_rooms()
+    rooms = service.get_available_rooms()
 
     print("\n" + "=" * 40)
 
-    if not salas:
-        print("  Nenhuma sala disponível no momento.")
+    if not rooms:
+        print("  No rooms available.")
         print("=" * 40)
     else:
-        print("  Salas disponíveis:")
+        print("  Available rooms:")
         print("-" * 40)
 
-        for numero, nome in enumerate(salas, start=1):
-            print(f"  [{numero}] {nome}")
+        for number, name in enumerate(rooms, start=1):
+            print(f"  [{number}] {name}")
 
         print("-" * 40)
 
-    print("  [0] Criar nova sala")
+    print("  [0] Create new room")
+    print("  [D] Delete a room")
     print("=" * 40)
 
     while True:
-        escolha = input("\nEscolha uma opção: ").strip()
+        choice = input("\nChoose an option: ").strip().lower()
 
-        if escolha == "0":
+        if choice == "0":
             while True:
-                nova_sala = input("Nome da nova sala (máx 15 caracteres): ").strip().upper()
+                new_room = input("Room name (max 15 characters): ").strip().upper()
 
-                if not nova_sala:
-                    print("[erro] O nome da sala não pode ser vazio.")
+                if not new_room:
+                    print("[error] Room name cannot be empty.")
                     continue
 
-                if len(nova_sala) > 15:
-                    print(f"[erro] Nome muito longo — máximo 15 caracteres.")
+                if len(new_room) > 15:
+                    print("[error] Name too long — maximum 15 characters.")
                     continue
 
-                if nova_sala in salas:
-                    print(f"[aviso] A sala '{nova_sala}' já existe. Entrando nela.")
+                if new_room in rooms:
+                    print(f"[warning] Room '{new_room}' already exists. Joining it.")
 
-                return nova_sala
+                return new_room
+            
+        if choice == "d":
+            bool = delete_choice(service)
+            if bool:
+                print("Room deleted successfully!!")
+                
+            else:
+                print("Room did not delete!!")
 
-        if escolha.isdigit():
-            indice = int(escolha)
-
-            if 1 <= indice <= len(salas):
-                return salas[indice - 1]
-
-        print(f"[erro] Opção inválida. Digite um número entre 0 e {len(salas)}.")
+            continue
+            
+            
+        elif choice.isdigit():
+            index = int(choice)
 
 
-def on_mensagem_received(sender: str, text: str) -> None:
+            if 1 <= index <= len(rooms):
+                return rooms[index - 1]
+
+        print(f"[error] Invalid option. Enter a number between 0 and {len(rooms)} or D(delete).")
+
+def on_message_received(sender: str, text: str) -> None:
 
     print(f"\n[{sender}]: {text}\n> ", end="", flush=True)
 
+def delete_choice(service: ChatService) -> bool:
 
+    rooms = service.get_available_rooms()
+    
+    while True:
+        print("  Available rooms:")
+        print("-" * 40)
+
+        for number, name in enumerate(rooms, start=1):
+            print(f"  [{number}] {name}")
+
+        print("-" * 40)
+
+        room_delete = input('Which one do you wanna DELETE ? \n > ')
+
+        if room_delete.isdigit():
+            index = int(room_delete)
+            room_delete = rooms[index -1]
+
+            return service.delete_room(room_delete)
+            
+        print(f"[error] Invalid option. Enter a number between 1 and {len(rooms)}.")
+  
 def main():
 
     service = ChatService()
 
-    
     print("\n" + "=" * 40)
-    print("       Bem-vindo ao Chat App")
+    print("       Welcome to Chat App")
     print("=" * 40)
 
     while True:
-        username = input("\nDigite seu username: ").strip()
+        username = input("\nEnter your username: ").strip()
 
         if not username:
-            print("[erro] O username não pode ser vazio.")
+            print("[error] Username cannot be empty.")
             continue
 
-        if len(username) > 35:
-            print("[erro] Username muito longo — máximo 35 caracteres.")
+        if len(username) > 25:
+            print("[error] Username too long — maximum 25 characters.")
             continue
 
         break
+    
+    
+    room = select_room(service)
 
-    room = selecionar_sala(service)
-
-    print(f"\n[sistema] Conectando à sala '{room}'...")
-
+    print(f"\n[system] Connecting to room '{room}'...")
 
     service.connect(
         username            = username,
         room                = room,
-        on_message_received = on_mensagem_received,
+        on_message_received = on_message_received,
         port                = args.port
     )
 
     time.sleep(0.3)
 
-    historico = service.get_history()
-    exibir_historico(historico)
+    history = service.get_history()
+    display_history(history)
 
-    print(f"[sistema] Você entrou em '{room}' como '{username.title()}'.")
-    print("[sistema] Digite suas mensagens. Ctrl+C para sair.\n")
+    print(f"[system] You joined '{room}' as '{username.title()}'.")
+    print("[system] Type your messages. Ctrl+C to exit.\n")
 
     try:
         while True:
             msg = input("> ")
+            if msg == '':
+                continue
 
             try:
                 service.send(msg)
 
             except ValueError as e:
-                print(f"[erro] {e}")
+                print(f"[error] {e}")
 
     except KeyboardInterrupt:
-        print("\n\n[sistema] Saindo...")
-
-    finally:
+        print("\n\n[system] Leaving room...")
         service.disconnect()
-        print("[sistema] Conexões encerradas. Até mais!")
+        print(f"[system] You left '{room}'.\n")
+        main()
+
+    '''finally:
+        service.disconnect()
+        print("[system] Connections closed. Goodbye!")'''
 
 if __name__ == "__main__":
     main()
+   

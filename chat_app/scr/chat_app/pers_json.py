@@ -1,10 +1,8 @@
-
 import json
 import os
 from datetime import datetime
 
 HISTORY_FILE = "chat_history.json"
-
 
 def _load_file() -> dict:
 
@@ -15,19 +13,28 @@ def _load_file() -> dict:
         try:
             return json.load(f)
         except json.JSONDecodeError:
-            return {}  
-
+            return {}
 
 def _save_file(data: dict) -> None:
 
     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
-
 def load_rooms() -> list[str]:
 
     return list(_load_file().keys())
 
+def delete_room(room) -> bool:
+
+    data = _load_file()
+    room = room.strip().upper()
+
+    if room not in data:
+        return False
+
+    del data[room]
+    _save_file(data)
+    return True
 
 def save_message(room: str, username: str, text: str) -> None:
 
@@ -44,7 +51,6 @@ def save_message(room: str, username: str, text: str) -> None:
     })
 
     _save_file(data)
-
 
 def load_history(room: str) -> list[dict]:
 
