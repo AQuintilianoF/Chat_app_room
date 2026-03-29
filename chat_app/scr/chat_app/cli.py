@@ -167,9 +167,6 @@ def main():
         print(f"[system] You left '{room}'.\n")
         main()
 
-    '''finally:
-        service.disconnect()
-        print("[system] Connections closed. Goodbye!")'''
 
 if __name__ == "__main__":
     main()

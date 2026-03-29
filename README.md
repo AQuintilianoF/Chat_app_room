@@ -1,7 +1,7 @@
 # Chat App
 
-Chat em tempo real pelo terminal usando Python e RabbitMQ.
-Suporte a múltiplas salas, múltiplos usuários simultâneos e histórico de mensagens.
+Real-time chat over the terminal using Python and RabbitMQ.
+Supports multiple rooms, multiple simultaneous users, and message history.
 
 ---
 
@@ -14,19 +14,15 @@ Suporte a múltiplas salas, múltiplos usuários simultâneos e histórico de me
 
 ## Instalação
 
-```bash
-# 1. clonar o repositório
-git clone <url-do-repositorio>
+Copy
+
+# 1. clone the repository
+git clone <repository-url>
 cd chat_app
 
-# 2. criar e ativar o ambiente virtual
+# 2. create and activate the virtual environment
 python -m venv .venv
-source .venv/bin/activate  # Linux/macOS
 .venv\Scripts\activate     # Windows
 
-# 3. instalar dependências
+# 3. install dependencies
 pip install -r requirements.txt
-
-# 4. subir o RabbitMQ
-docker compose up -d
-```
