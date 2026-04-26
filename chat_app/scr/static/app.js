@@ -11,7 +11,7 @@
 
 // ── Config ──────────────────────────────────────────────────────────────────
 // For deployment: replace PROD_API_URL with your actual Render URL later.
-const PROD_API_URL = "https://your-corpchat-backend.onrender.com"; // <-- UPDATE ME
+const PROD_API_URL = "https://chat-app-room-3coz.onrender.com"; // <-- UPDATE ME
 
 // Simple host check to allow running locally without breaking production
 const isDev = location.hostname === "localhost" || location.hostname === "127.0.0.1";
