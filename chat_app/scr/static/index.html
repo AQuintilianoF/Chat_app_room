@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CorpChat — Internal Messaging</title>
+  <meta name="description" content="CorpChat real-time internal messaging powered by RabbitMQ and Supabase."/>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+<body>
+
+<!-- ── Username / Login Screen ─────────────────────────────────────────────── -->
+<div class="username-screen" id="usernameScreen">
+  <div class="username-card">
+    <div class="logo">CorpChat</div>
+    <div class="logo-sub">INTERNAL MESSAGING SYSTEM</div>
+    <h2>Welcome aboard 👋</h2>
+    <p>Enter your display name to join the network. Your messages are delivered in real-time via RabbitMQ.</p>
+    <input
+      class="modal-input"
+      id="usernameInput"
+      placeholder="Your name (e.g. Ana Silva)"
+      maxlength="25"
+      autocomplete="off"
+      autofocus
+    />
+    <button class="enter-btn" id="enterBtn" onclick="startSession()">Enter Chat →</button>
+  </div>
+</div>
+
+<!-- ── App Shell ───────────────────────────────────────────────────────────── -->
+
+<!-- Sidebar -->
+<aside class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="logo">CorpChat</div>
+    <div class="logo-sub">INTERNAL MESSAGING SYSTEM</div>
+
+    <div class="user-badge">
+      <div class="avatar" id="avatarEl">?</div>
+      <div class="user-info">
+        <div class="user-name" id="userNameEl">—</div>
+        <div class="user-status">
+          <div class="status-dot"></div> Online
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rooms-section">
+    <div class="section-label">
+      Rooms
+      <button class="add-room-btn" id="addRoomBtn" onclick="openNewRoom()" title="Create room" aria-label="Create room">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="7" y1="1" x2="7" y2="13"/>
+          <line x1="1" y1="7" x2="13" y2="7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="rooms-list" id="roomsList">
+    <div class="loader"><div class="spinner"></div> Loading rooms…</div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">
+      <div class="db-badge">
+        <div class="status-dot" style="width:5px;height:5px;"></div> Supabase
+      </div>
+      <div class="mq-badge">
+        <div class="status-dot" style="width:5px;height:5px;background:var(--accent3);box-shadow:0 0 5px var(--accent3)"></div> RabbitMQ
+      </div>
+    </div>
+    v2.1 · Part II · Academic Demo<br/>
+    WebSocket · CloudAMQP · Supabase
+  </div>
+
+</aside>
+
+<!-- Main content area (replaced dynamically by app.js) -->
+<main class="main" id="mainArea">
+  <div class="welcome" id="welcomeScreen">
+    <div class="welcome-icon">💬</div>
+    <h2>Select a room to start</h2>
+    <p>Choose a channel from the sidebar or create a new one to begin messaging.</p>
+    <div class="welcome-hint">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <line x1="6" y1="1" x2="6" y2="11"/>
+        <line x1="1" y1="6" x2="11" y2="6"/>
+      </svg>
+      Click + to create a room
+    </div>
+  </div>
+</main>
+
+<!-- ── Create Room Modal ────────────────────────────────────────────────────── -->
+<div class="overlay" id="newRoomOverlay" role="dialog" aria-modal="true" aria-label="Create new room">
+  <div class="modal">
+    <div class="modal-icon">💬</div>
+    <h3>Create New Room</h3>
+    <p>Give your channel a short name (max 15 characters). All team members can join instantly.</p>
+    <input
+      class="modal-input"
+      id="newRoomInput"
+      placeholder="e.g. MARKETING"
+      maxlength="15"
+      autocomplete="off"
+    />
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('newRoomOverlay')">Cancel</button>
+      <button class="btn btn-primary" onclick="createRoom()">Create Room</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast Container ──────────────────────────────────────────────────────── -->
+<div class="toast-area" id="toastArea" aria-live="polite"></div>
+
+<!-- App logic -->
+<script src="/static/app.js"></script>
+
+</body>
+</html>

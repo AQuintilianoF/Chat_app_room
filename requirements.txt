@@ -1,2 +1,5 @@
 pika
 python-dotenv
+fastapi
+uvicorn[standard]
+httpx
