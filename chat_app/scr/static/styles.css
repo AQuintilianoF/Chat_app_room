@@ -777,3 +777,60 @@ body {
 }
 
 .shake { animation: shake .35s ease; }
+
+/* ───────────────────────────────────────────────────────────
+   Mobile Responsiveness
+─────────────────────────────────────────────────────────── */
+.mobile-back-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  padding: 4px;
+  margin-right: 8px;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-back-btn:hover { color: var(--accent); }
+
+@media (max-width: 768px) {
+  /* Sidebar takes full width when no room is selected */
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  /* Main area is hidden by default on mobile */
+  .main {
+    display: none;
+  }
+  
+  /* When a room is active, hide sidebar and show main */
+  body.room-active .sidebar {
+    display: none;
+  }
+  body.room-active .main {
+    display: flex;
+  }
+  
+  /* Show the back button */
+  .mobile-back-btn {
+    display: flex;
+  }
+  
+  /* Adjust padding and sizing for mobile */
+  .chat-header {
+    padding: 10px 16px;
+    gap: 8px;
+  }
+  .messages-area {
+    padding: 16px 16px 8px;
+  }
+  .input-area {
+    padding: 10px 16px 14px;
+  }
+  .msg-bubble {
+    max-width: 85%;
+  }
+}

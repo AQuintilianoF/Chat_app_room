@@ -172,12 +172,23 @@ async function deleteRoom(e, name) {
 
 // ── Chat — Room Joining ───────────────────────────────────────────────────────
 
+/** Leaves the current room and goes back to the mobile sidebar */
+function leaveRoom() {
+  currentRoom = null;
+  closeSocket();
+  document.body.classList.remove('room-active');
+  setActiveRoom(null);
+  showWelcome();
+}
+
 /**
  * Switches to the given room: renders UI, loads history, opens WebSocket.
  * @param {string} name  Room name (uppercase)
  */
 function joinRoom(name) {
   if (currentRoom === name) return;
+
+  document.body.classList.add('room-active');
 
   currentRoom = name;
   closeSocket();
@@ -219,6 +230,9 @@ function showWelcome() {
 function renderChatUI(name) {
   document.getElementById('mainArea').innerHTML = `
     <div class="chat-header">
+      <button class="mobile-back-btn" onclick="leaveRoom()" aria-label="Back to rooms">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
       <div class="chat-header-left">
         <div class="chat-header-title">
           <span class="hash">#</span>${escHtml(name.toLowerCase())}
@@ -417,6 +431,14 @@ function sendMessage() {
 
 // ── Chat — Render ─────────────────────────────────────────────────────────────
 
+/** Generate a deterministic color from a username */
+const SENDER_COLORS = ['#f87171', '#fbbf24', '#34d399', '#38bdf8', '#c084fc', '#f472b6'];
+function getColorForName(name) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  return SENDER_COLORS[Math.abs(hash) % SENDER_COLORS.length];
+}
+
 /**
  * Appends an array of messages to the messages container.
  * Groups messages by date with day-divider headers.
@@ -443,12 +465,13 @@ function renderMessages(msgs, area, scrollToBottom) {
 
     const isOwn   = m.username.toLowerCase() === currentUser.toLowerCase();
     const timeStr = d.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
+    const colorStyle = isOwn ? '' : `style="color: ${getColorForName(m.username)}"`;
 
     const wrapper = document.createElement('div');
     wrapper.className = isOwn ? 'msg-own-row' : 'msg-group';
     wrapper.innerHTML = `
       <div class="msg-header">
-        <span class="msg-sender">${escHtml(m.username)}</span>
+        <span class="msg-sender" ${colorStyle}>${escHtml(m.username)}</span>
         <span class="msg-time">${timeStr}</span>
       </div>
       <div class="msg-bubble ${isOwn ? 'own' : ''}">${escHtml(m.text)}</div>
