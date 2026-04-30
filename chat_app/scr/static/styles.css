@@ -56,8 +56,7 @@ body {
    Sidebar
 ─────────────────────────────────────────────────────────── */
 .sidebar {
-  width: var(--sidebar-w);
-  min-width: var(--sidebar-w);
+  width: clamp(240px, 25vw, 320px);
   background: var(--surface);
   border-right: 1px solid var(--border);
   display: flex;
@@ -245,43 +244,6 @@ body {
 .room-item:hover .room-delete     { opacity: .5; }
 .room-delete:hover                { opacity: 1 !important; background: rgba(248,113,113,.12); }
 
-/* — Footer — */
-.sidebar-footer {
-  padding: 14px 20px;
-  border-top: 1px solid var(--border);
-  font-family: var(--mono);
-  font-size: 9.5px;
-  color: var(--muted);
-  line-height: 1.7;
-  flex-shrink: 0;
-}
-
-.db-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(52,211,153,.08);
-  border: 1px solid rgba(52,211,153,.2);
-  border-radius: 99px;
-  padding: 3px 9px;
-  color: var(--green);
-  font-size: 9.5px;
-  margin-bottom: 8px;
-}
-
-.mq-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(79,142,247,.08);
-  border: 1px solid rgba(79,142,247,.2);
-  border-radius: 99px;
-  padding: 3px 9px;
-  color: var(--accent3);
-  font-size: 9.5px;
-  margin-bottom: 8px;
-  margin-left: 5px;
-}
 
 /* ───────────────────────────────────────────────────────────
    Main Area
