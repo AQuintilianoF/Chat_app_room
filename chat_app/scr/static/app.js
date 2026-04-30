@@ -1,5 +1,5 @@
 /**
- * CorpChat — app.js
+ * Chat_Room — app.js
  * =================
  * Handles all client-side logic:
  *   - Session (username entry)

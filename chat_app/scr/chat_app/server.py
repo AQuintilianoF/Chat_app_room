@@ -1,5 +1,5 @@
 """
-CorpChat — FastAPI WebSocket server
+Chat_Room — FastAPI WebSocket server
 ====================================
 Bridges the browser (WebSocket / REST) with:
   - CloudAMQP / RabbitMQ  (real-time pub/sub via pika)
@@ -47,7 +47,7 @@ SB_HEADERS = {
 }
 
 # ── FastAPI app ───────────────────────────────────────────────────────────────
-app = FastAPI(title="CorpChat API")
+app = FastAPI(title="Chat_Room API")
 
 app.add_middleware(
     CORSMiddleware,
